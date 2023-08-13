@@ -77,3 +77,7 @@ erDiagram
 The runtime lock is verified on Python 3.12 / Django 5.2.18. The 44 pytest checks
 cover authenticated views, forms, model relationships and settings; install
 `requirements-dev.txt` and run `python -m pytest -q` to repeat them.
+
+## Author
+
+[**Muhammad Nadeem**](https://github.com/dev-mnadeem)
