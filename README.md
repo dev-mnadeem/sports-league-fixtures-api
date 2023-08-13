@@ -11,12 +11,12 @@ What you can do:
 - Sign up, log in and log out
 - Browse paginated team and player lists
 
-It uses Django 4.2 with class-based views, server-rendered Bootstrap 5 templates and SQLite. Gunicorn serves it in the container.
+It uses Django 5.2 LTS with class-based views, server-rendered Bootstrap 5 templates and SQLite. Gunicorn serves it in the container.
 
 ## Getting started
 
 ```bash
-python3 -m venv .venv && source .venv/bin/activate
+python3.12 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
 export DJANGO_SECRET_KEY="$(python -c 'from django.core.management.utils import get_random_secret_key as k; print(k())')"
@@ -63,3 +63,17 @@ Views in `sports/views.py` stay thin and get their querysets from `sports/select
 - Any logged-in user can edit or delete anything, there are no roles.
 - Signup is open with no email verification.
 - No search, just pagination.
+
+## Roster relationships
+
+```mermaid
+erDiagram
+  TEAM ||--o{ TEAM_PLAYERS : contains
+  PLAYER ||--o{ TEAM_PLAYERS : joins
+  TEAM { string name string city string mascot }
+  PLAYER { string name }
+```
+
+The runtime lock is verified on Python 3.12 / Django 5.2.18. The 44 pytest checks
+cover authenticated views, forms, model relationships and settings; install
+`requirements-dev.txt` and run `python -m pytest -q` to repeat them.
